@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+import '../styles/globals.css';
+const { title, description, image = '/og-image.jpg' } = Astro.props;
+const siteUrl = Astro.site || 'http://localhost:4321';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <!-- Open Graph / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, siteUrl)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, siteUrl)} />
+  </head>
+  <body class="bg-black min-h-screen text-green-400 scanlines relative overflow-x-hidden">
+    <!-- Gaming Grid Background -->
+    <div class="fixed inset-0 opacity-20 pointer-events-none">
+      <div class="absolute inset-0" style="background-image: linear-gradient(#00ff41 1px, transparent 1px), linear-gradient(90deg, #00ff41 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+    <slot />
+  </body>
+</html>

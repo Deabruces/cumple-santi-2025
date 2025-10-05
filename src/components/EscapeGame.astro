@@ -1,0 +1,880 @@
+---
+// Mini-juego de entrada con flujo completo de RSVP
+---
+
+<div id="escape-overlay" class="fixed inset-0 bg-black z-50 flex items-center justify-center p-4 overflow-y-auto">
+  <div class="max-w-lg w-full my-8">
+    <!-- Game Container -->
+    <div class="bg-black border-4 border-green-500 p-6 md:p-8 gaming-glow-strong animate-scale-in relative">
+      <!-- Pixel Corners -->
+      <div class="absolute -top-2 -left-2 w-6 h-6 bg-green-500"></div>
+      <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500"></div>
+      <div class="absolute -bottom-2 -left-2 w-6 h-6 bg-green-500"></div>
+      <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500"></div>
+
+      <!-- Progress Indicator -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-2">
+          <p class="text-green-400 text-xs pixel-text">ETAPA <span id="current-stage">1</span>/6</p>
+          <p class="text-green-400 text-xs pixel-text" id="hp-display">HP: ❤️❤️❤️</p>
+        </div>
+        <div class="h-2 bg-black border-2 border-green-500">
+          <div id="progress-bar" class="h-full bg-green-500 transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Content Area (changes based on stage) -->
+      <div id="content-area">
+        <!-- Stage content will be dynamically inserted here -->
+      </div>
+
+      <!-- Skip Button -->
+      <!-- <button
+        id="skip-btn"
+        class="w-full px-4 py-2 text-green-600 hover:text-green-500 text-xs transition-colors pixel-text mt-4"
+      >
+        SALTAR →
+      </button> -->
+    </div>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('escape-overlay');
+  const contentArea = document.getElementById('content-area');
+  // const skipBtn = document.getElementById('skip-btn');
+  const currentStageSpan = document.getElementById('current-stage');
+  const progressBar = document.getElementById('progress-bar');
+  const hpDisplay = document.getElementById('hp-display');
+  const invitacionCodes: Record<string, string> = {
+    'Santiago Saud': 'SAUD10',
+    'Mateo Yanez': 'YANE10',
+    'Leon Peña': 'PENA10',
+    'Leon Sarnaki': 'SARN10',
+    'Facundo Hidalgo': 'HIDA10',
+    'Maximo Reyes': 'REYE10',
+    'Mariano Castro': 'CAST10',
+    'Tomas Nieto': 'NIET10',
+    'Valentin Gummusio': 'GUMM10',
+    'Dominga Vergara': 'VERG10',
+    'Emma Vidal': 'VIDA10',
+    'Renata Quesada': 'QUES10',
+  };
+  let currentStage = 0;
+  let hearts = 3;
+  let userData = {
+    nombre_nino: '',
+    nombre_padre: '',
+    telefono: '',
+    email: '',
+    sala_preferida: '',
+    comentarios: ''
+  };
+
+  const questions = [
+    {
+      question: "¿Cuántos años cumple Santiago?",
+      answers: ["10", "diez"],
+    },
+    {
+      question: "¿En qué mes es el cumpleaños?",
+      answers: ["octubre"],
+    },
+    {
+      question: "¿Qué día es el cumpleaños?",
+      answers: ["domingo","19","19 de octubre"],
+    },
+  ];
+
+  const stages = [
+    { name: 'nombre', total: 6 },
+    { name: 'intro', total: 6 },
+    { name: 'quiz', total: 6 },
+    { name: 'info', total: 6 },
+    { name: 'sala', total: 6 },
+    { name: 'form', total: 6 },
+  ];
+
+  // Check if already completed
+  if (sessionStorage.getItem('userSelected')) {
+    overlay?.classList.add('hidden');
+  }
+
+  // Initialize
+  loadStage();
+
+  function loadStage() {
+    const stageIndex = Math.floor(currentStage);
+    const stageName = stages[stageIndex]?.name || 'intro';
+
+    if (currentStageSpan) {
+      currentStageSpan.textContent = (stageIndex + 1).toString();
+    }
+
+    updateProgressBar();
+
+    switch (stageName) {
+      case 'nombre':
+        renderNombreSelection();
+        break;
+      case 'intro':
+        renderIntro();
+        break;
+      case 'quiz':
+        renderQuiz();
+        break;
+      case 'info':
+        renderInfo();
+        break;
+      case 'sala':
+        renderSalaSelection();
+        break;
+      case 'form':
+        renderForm();
+        break;
+      default:
+        completeRSVP();
+    }
+  }
+
+  function updateProgressBar() {
+    const progress = (currentStage / stages.length) * 100;
+    if (progressBar) {
+      progressBar.style.width = `${progress}%`;
+    }
+  }
+
+  function updateHearts() {
+    const heartSymbols = '❤️'.repeat(hearts);
+    const emptyHearts = '🖤'.repeat(3 - hearts);
+    if (hpDisplay) {
+      hpDisplay.textContent = 'HP: ' + heartSymbols + emptyHearts;
+    }
+  }
+
+  // STAGE 0: NOMBRE SELECTION
+  // Códigos de invitación únicos por invitado
+  
+
+  function renderNombreSelection() {
+    if (!contentArea) return;
+    contentArea.innerHTML = `
+      <div class="text-center mb-4 gaming-glow">
+        <div class="text-6xl mb-2">🎫</div>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight">
+        INVITACIÓN
+      </h2>
+
+      <p class="text-center text-green-300 mb-4 text-xs">
+        Ingresa el código que Santiago te dio
+      </p>
+
+      <div class="space-y-4 mb-4">
+        <div class="bg-black border-2 border-green-500 p-4 relative">
+          <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+          <label class="block text-xs font-bold text-green-400 mb-2 pixel-text">
+            TU NOMBRE *
+          </label>
+          <select
+            id="nombre-select"
+            required
+            class="w-full px-4 py-3 bg-black border-2 border-green-500 text-green-400 pixel-text focus:outline-none focus:border-green-300 transition-all gaming-glow text-sm"
+          >
+            <button>
+              <selectedcontent></selectedcontent>
+            </button>
+          ${invitacionCodes ? Object.keys(invitacionCodes).sort().map(name => `
+            <option value="${name}" class="bg-black text-green-400 py-3">${name}</option>`).join('') : ''}
+          </select>
+        </div>
+
+        <div class="bg-black border-2 border-green-500 p-4 relative">
+          <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+          <label class="block text-xs font-bold text-green-400 mb-2 pixel-text">
+            CODIGO *
+          </label>
+          <input
+            type="text"
+            id="codigo-input"
+            maxlength="10"
+            required
+            class="w-full px-4 py-3 text-center text-lg font-bold bg-black border-2 border-green-500 text-green-400 focus:border-green-300 focus:outline-none transition-all gaming-glow pixel-text uppercase"
+            placeholder="CODIGO"
+          />
+        </div>
+      </div>
+
+      <div id="codigo-feedback" class="text-center mb-4 min-h-[24px]">
+        <p id="codigo-error" class="text-red-500 text-xs hidden pixel-text">❌ CODIGO INCORRECTO</p>
+      </div>
+
+      <button id="nombre-next" disabled class="w-full px-6 py-4 bg-green-500 hover:bg-green-400 text-black font-bold text-sm transition-all pixel-text gaming-glow-strong border-4 border-green-600 active:translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">
+        ▶ VERIFICAR
+      </button>
+    `;
+
+    const nombreSelect = document.getElementById('nombre-select') as HTMLSelectElement;
+    const codigoInput = document.getElementById('codigo-input') as HTMLInputElement;
+    const nextBtn = document.getElementById('nombre-next') as HTMLButtonElement;
+    const errorText = document.getElementById('codigo-error');
+
+    const checkForm = () => {
+      if (nombreSelect.value && codigoInput.value) {
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.disabled = true;
+      }
+    };
+
+    nombreSelect?.addEventListener('change', checkForm);
+    codigoInput?.addEventListener('input', checkForm);
+
+    const verificarCodigo = async () => {
+      const nombre = nombreSelect.value;
+      const codigo = codigoInput.value.toUpperCase().trim();
+
+      if (!nombre || !codigo) return;
+
+      nextBtn.disabled = true;
+      nextBtn.textContent = '⏳ VERIFICANDO...';
+
+      // Primero verificar si ya existe en la base de datos
+      try {
+        const checkResponse = await fetch(`/api/verificar?nombre_nino=${encodeURIComponent(nombre)}`);
+        const checkData = await checkResponse.json();
+
+        if (checkData.existe) {
+          // Usuario ya confirmó, mostrar su perfil
+          userData.nombre_nino = nombre;
+          userData.sala_preferida = checkData.data.sala_preferida;
+
+          // Ir directamente al perfil (última etapa)
+          showProfile();
+          return;
+        }
+      } catch (err) {
+        console.error('Error verificando usuario:', err);
+      }
+
+      // Si no existe, validar el código
+      if (invitacionCodes[nombre] === codigo) {
+        userData.nombre_nino = nombre;
+        errorText?.classList.add('hidden');
+        currentStage++;
+        loadStage();
+      } else {
+        errorText?.classList.remove('hidden');
+        codigoInput.classList.add('border-red-500', 'animate-shake');
+        nextBtn.disabled = false;
+        nextBtn.textContent = '▶ VERIFICAR';
+
+        setTimeout(() => {
+          codigoInput.classList.remove('border-red-500', 'animate-shake');
+          errorText?.classList.add('hidden');
+        }, 1500);
+      }
+    };
+
+    nextBtn?.addEventListener('click', verificarCodigo);
+    codigoInput?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') verificarCodigo();
+    });
+  }
+
+  // PROFILE VIEW: For users who already confirmed
+  function showProfile() {
+    if (!contentArea) return;
+
+    const salaIcon = userData.sala_preferida?.includes('Mineros') ? '⛏️' : '🚢';
+
+    contentArea.innerHTML = `
+      <div class="text-center mb-6">
+        <div class="text-8xl gaming-glow animate-bounce">✅</div>
+      </div>
+
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-green-400 pixel-heading gaming-glow leading-tight">
+        ¡YA ESTAS CONFIRMADO!
+      </h2>
+
+      <div class="bg-black border-4 border-green-500 p-6 mb-6 relative gaming-glow-strong">
+        <div class="absolute -top-2 -left-2 w-4 h-4 bg-green-500"></div>
+        <div class="absolute -top-2 -right-2 w-4 h-4 bg-green-500"></div>
+        <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-500"></div>
+        <div class="absolute -bottom-2 -right-2 w-4 h-4 bg-green-500"></div>
+
+        <div class="space-y-4">
+          <div class="text-center pb-4 border-b-2 border-green-500">
+            <p class="text-sm text-green-400 pixel-text mb-1">JUGADOR</p>
+            <p class="text-xl text-green-300 pixel-heading">${userData.nombre_nino}</p>
+          </div>
+
+          <div class="text-center pb-4 border-b-2 border-green-500">
+            <p class="text-sm text-green-400 pixel-text mb-1">SALA ASIGNADA</p>
+            <p class="text-xl text-green-300 pixel-heading">${salaIcon} ${userData.sala_preferida}</p>
+          </div>
+
+          <div class="text-center pb-4 border-b-2 border-green-500">
+            <p class="text-sm text-green-400 pixel-text mb-1">📅 FECHA</p>
+            <p class="text-lg text-green-300">Domingo 19 Octubre 2025</p>
+          </div>
+
+          <div class="text-center pb-4 border-b-2 border-green-500">
+            <p class="text-sm text-green-400 pixel-text mb-1">⏰ HORA</p>
+            <p class="text-lg text-green-300">16:00 - 19:00</p>
+          </div>
+
+          <div class="text-center">
+            <p class="text-sm text-green-400 pixel-text mb-1">📍 LUGAR</p>
+            <p class="text-sm text-green-300">Escapology - Parque Araucano</p>
+            <p class="text-xs text-green-300">Presidente Riesco 5330, Las Condes</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center text-green-500 text-xs pixel-text mb-4 gaming-glow">
+        NOS VEMOS EN LA FIESTA! 🎮
+      </p>
+
+      <div class="flex gap-4">
+        <a
+          href="/actividades"
+          class="flex-1 px-4 py-3 bg-black border-4 border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-bold text-xs transition-all pixel-text gaming-glow text-center"
+        >
+          VER PROGRAMA
+        </a>
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Presidente+Riesco+5330+Las+Condes+Santiago"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 px-4 py-3 bg-black border-4 border-green-500 text-green-400 hover:bg-green-500 hover:text-black font-bold text-xs transition-all pixel-text gaming-glow text-center"
+        >
+          VER MAPA
+        </a>
+      </div>
+    `;
+
+    sessionStorage.setItem('rsvpCompleted', 'true');
+    if (progressBar) progressBar.style.width = '100%';
+
+    setTimeout(() => {
+      overlay?.classList.add('animate-fade-out');
+      setTimeout(() => {
+        overlay?.classList.add('hidden');
+      }, 500);
+    }, 5000);
+  }
+
+  // STAGE 1: INTRO
+  function renderIntro() {
+    if (!contentArea) return;
+    contentArea.innerHTML = `
+      <div class="text-center mb-6 gaming-glow">
+        <div class="text-7xl mb-4">🎮</div>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-green-400 pixel-heading gaming-glow leading-tight">
+        BIENVENIDO<br/>${userData.nombre_nino}
+      </h2>
+
+      <div class="bg-black border-2 border-green-500 p-4 mb-6 relative">
+        <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+        <p class="text-green-300 text-sm leading-relaxed text-center">
+          Estas a punto de unirte a la fiesta de cumpleaños más épica del año!
+        </p>
+      </div>
+
+      <button id="start-btn" class="w-full px-6 py-4 bg-green-500 hover:bg-green-400 text-black font-bold text-sm transition-all pixel-text gaming-glow-strong border-4 border-green-600 active:translate-y-1">
+        ▶ COMENZAR
+      </button>
+    `;
+
+    document.getElementById('start-btn')?.addEventListener('click', () => {
+      currentStage++;
+      loadStage();
+    });
+  }
+
+  // STAGE 2: QUIZ
+  let quizIndex = 0;
+  function renderQuiz() {
+    if (!contentArea) return;
+
+    if (quizIndex >= questions.length) {
+      currentStage++;
+      quizIndex = 0;
+      loadStage();
+      return;
+    }
+
+    const q = questions[quizIndex];
+
+    contentArea.innerHTML = `
+      <div class="text-center mb-4">
+        <div class="text-6xl gaming-glow">🔐</div>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight">
+        DESBLOQUEA
+      </h2>
+      <p class="text-center text-green-300 mb-4 text-sm pixel-heading">
+        PREGUNTA ${quizIndex + 1}/${questions.length}
+      </p>
+
+      <div class="bg-black border-2 border-green-500 p-4 mb-4 relative min-h-[80px] flex items-center justify-center">
+        <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+        <p class="text-center text-green-200 text-sm pixel-heading">
+          ${q.question}
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <input
+          type="text"
+          id="quiz-answer"
+          maxlength="20"
+          class="w-full px-4 py-3 text-center text-xl font-bold bg-black border-4 border-green-500 text-green-400 focus:border-green-300 focus:outline-none transition-all gaming-glow pixel-heading uppercase"
+          placeholder="RESPUESTA"
+        />
+      </div>
+
+      <button id="quiz-submit" class="w-full px-6 py-4 bg-green-500 hover:bg-green-400 text-black font-bold text-sm transition-all pixel-text gaming-glow-strong border-4 border-green-600 active:translate-y-1">
+        ▶ ENVIAR
+      </button>
+
+      <div id="quiz-feedback" class="text-center mt-4 min-h-[24px]">
+        <p id="quiz-error" class="text-red-500 text-xs hidden animate-shake pixel-text">❌ ERROR!</p>
+        <p id="quiz-success" class="text-green-400 text-xs hidden pixel-text gaming-glow">✅ CORRECTO!</p>
+      </div>
+    `;
+
+    const answerInput = document.getElementById('quiz-answer') as HTMLInputElement;
+    const submitBtn = document.getElementById('quiz-submit');
+    const errorText = document.getElementById('quiz-error');
+    const successText = document.getElementById('quiz-success');
+
+    answerInput?.focus();
+
+    const checkAnswer = () => {
+      const userAnswer = answerInput.value.toLowerCase().trim();
+      if (q.answers.includes(userAnswer)) {
+        successText?.classList.remove('hidden');
+        errorText?.classList.add('hidden');
+        answerInput.disabled = true;
+        submitBtn!.disabled = true;
+
+        setTimeout(() => {
+          quizIndex++;
+          renderQuiz();
+        }, 1000);
+      } else {
+        hearts--;
+        updateHearts();
+        errorText?.classList.remove('hidden');
+        answerInput.classList.add('border-red-500', 'animate-shake');
+
+        setTimeout(() => {
+          answerInput.classList.remove('border-red-500', 'animate-shake');
+          errorText?.classList.add('hidden');
+        }, 1000);
+
+        if (hearts <= 0) {
+          setTimeout(() => skipGame(), 1500);
+        }
+      }
+    };
+
+    submitBtn?.addEventListener('click', checkAnswer);
+    answerInput?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkAnswer();
+    });
+  }
+
+  // STAGE 3: INFO
+  function renderInfo() {
+    if (!contentArea) return;
+    contentArea.innerHTML = `
+      <div class="text-center mb-4">
+        <div class="text-6xl gaming-glow">📅</div>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-green-400 pixel-heading gaming-glow leading-tight">
+        INFO DEL EVENTO
+      </h2>
+
+      <div class="space-y-3 mb-6">
+        <div class="bg-black border-2 border-green-500 p-4 relative">
+          <div class="absolute -top-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <p class="text-green-400 text-sm pixel-heading">📅 FECHA</p>
+          <p class="text-green-300 text-xs mt-1">Domingo 19 Octubre 2025</p>
+        </div>
+
+        <div class="bg-black border-2 border-green-500 p-4 relative">
+          <div class="absolute -top-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <p class="text-green-400 text-sm pixel-heading">⏰ HORA</p>
+          <p class="text-green-300 text-xs mt-1">16:00 - 19:00</p>
+        </div>
+
+        <div class="bg-black border-2 border-green-500 p-4 relative">
+          <div class="absolute -top-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <p class="text-green-400 text-sm pixel-heading">📍 LUGAR</p>
+          <p class="text-green-300 text-xs mt-1">Escapology - Parque Araucano<br/>Presidente Riesco 5330, Las Condes</p>
+        </div>
+
+        <div class="bg-black border-2 border-green-500 p-4 relative">
+          <div class="absolute -top-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500"></div>
+          <p class="text-green-400 text-sm pixel-heading">🎮 ACTIVIDADES</p>
+          <p class="text-green-300 text-xs mt-1">Escape Room + Picnic con Pizza</p>
+        </div>
+      </div>
+
+      <button id="info-next" class="w-full px-6 py-4 bg-green-500 hover:bg-green-400 text-black font-bold text-sm transition-all pixel-text gaming-glow-strong border-4 border-green-600 active:translate-y-1">
+        ▶ CONTINUAR
+      </button>
+    `;
+
+    document.getElementById('info-next')?.addEventListener('click', () => {
+      currentStage++;
+      loadStage();
+    });
+  }
+
+  // STAGE 4: SALA SELECTION
+  function renderSalaSelection() {
+    if (!contentArea) return;
+
+    // Simular disponibilidad (en producción vendría de Supabase)
+    const salaData = {
+      mineros: { disponible: 4, max: 6 },
+      submarino: { disponible: 5, max: 6 }
+    };
+
+    contentArea.innerHTML = `
+      <div class="text-center mb-4">
+        <div class="text-6xl gaming-glow">🔐</div>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-green-400 pixel-heading gaming-glow leading-tight">
+        ESCOGE TU SALA
+      </h2>
+
+      <p class="text-center text-green-300 mb-4 text-xs">
+        Max 6 jugadores por sala
+      </p>
+
+      <div class="space-y-4 mb-6">
+        <!-- Sala 1: Los Mineros -->
+        <button id="sala-mineros" class="sala-btn w-full bg-black border-4 border-green-500 p-4 gaming-glow relative text-left hover:border-green-300 transition-all ${salaData.mineros.disponible === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}" ${salaData.mineros.disponible === 0 ? 'disabled' : ''}>
+          <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-bold text-green-400 pixel-heading">⛏️ LOS MINEROS</h3>
+            <span class="px-2 py-1 bg-green-500 text-black text-xs pixel-text border-2 border-black">
+              ROOM 1
+            </span>
+          </div>
+          <p class="text-green-300 text-xs mb-2">Mina colapsada. Encuentra la salida.</p>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-2 bg-black border border-green-500">
+              <div class="h-full bg-green-500" style="width: ${(salaData.mineros.disponible / salaData.mineros.max) * 100}%"></div>
+            </div>
+            <span class="text-green-400 text-xs pixel-text">${salaData.mineros.disponible}/${salaData.mineros.max}</span>
+          </div>
+        </button>
+
+        <!-- Sala 2: Bajo Presión -->
+        <button id="sala-submarino" class="sala-btn w-full bg-black border-4 border-green-500 p-4 gaming-glow relative text-left hover:border-green-300 transition-all ${salaData.submarino.disponible === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}" ${salaData.submarino.disponible === 0 ? 'disabled' : ''}>
+          <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-bold text-green-400 pixel-heading">🚢 BAJO PRESION</h3>
+            <span class="px-2 py-1 bg-green-500 text-black text-xs pixel-text border-2 border-black">
+              ROOM 2
+            </span>
+          </div>
+          <p class="text-green-300 text-xs mb-2">Submarino 1944. Encuentra 6 tanques.</p>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-2 bg-black border border-green-500">
+              <div class="h-full bg-green-500" style="width: ${(salaData.submarino.disponible / salaData.submarino.max) * 100}%"></div>
+            </div>
+            <span class="text-green-400 text-xs pixel-text">${salaData.submarino.disponible}/${salaData.submarino.max}</span>
+          </div>
+        </button>
+      </div>
+
+      <div id="sala-feedback" class="text-center mb-4">
+        <p class="text-green-300 text-xs pixel-text">SELECCIONA UNA SALA</p>
+      </div>
+    `;
+
+    document.getElementById('sala-mineros')?.addEventListener('click', () => {
+      if (salaData.mineros.disponible > 0) {
+        userData.sala_preferida = 'Los Mineros';
+        currentStage++;
+        loadStage();
+      }
+    });
+
+    document.getElementById('sala-submarino')?.addEventListener('click', () => {
+      if (salaData.submarino.disponible > 0) {
+        userData.sala_preferida = 'Bajo Presión';
+        currentStage++;
+        loadStage();
+      }
+    });
+  }
+
+  // STAGE 5: FORM
+  function renderForm() {
+    if (!contentArea) return;
+    contentArea.innerHTML = `
+      <div class="text-center mb-4">
+        <div class="text-6xl gaming-glow">📝</div>
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-green-400 pixel-heading gaming-glow leading-tight">
+        TUS DATOS
+      </h2>
+
+      <div class="text-center mb-4 space-y-2">
+        <p class="text-green-300 text-xs">
+          Jugador: <strong class="text-green-400 pixel-heading">${userData.nombre_nino}</strong>
+        </p>
+        <p class="text-green-300 text-xs">
+          Sala: <strong class="text-green-400 pixel-heading">${userData.sala_preferida}</strong>
+        </p>
+      </div>
+
+      <form id="rsvp-form" class="space-y-4">
+
+        <div>
+          <label class="block text-xs font-bold text-green-400 mb-2 pixel-text">
+            NOMBRE ADULTO *
+          </label>
+          <input
+            type="text"
+            id="nombre_padre"
+            required
+            class="w-full px-4 py-2 bg-black border-2 border-green-500 text-green-400 placeholder-green-700 focus:outline-none focus:border-green-300 transition-all gaming-glow text-sm"
+            placeholder="PADRE/MADRE"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-green-400 mb-2 pixel-text">
+            TELEFONO *
+          </label>
+          <input
+            type="tel"
+            id="telefono"
+            required
+            class="w-full px-4 py-2 bg-black border-2 border-green-500 text-green-400 placeholder-green-700 focus:outline-none focus:border-green-300 transition-all gaming-glow text-sm"
+            placeholder="+56 9 1234 5678"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-green-400 mb-2 pixel-text">
+            EMAIL
+          </label>
+          <input
+            type="email"
+            id="email"
+            class="w-full px-4 py-2 bg-black border-2 border-green-500 text-green-400 placeholder-green-700 focus:outline-none focus:border-green-300 transition-all gaming-glow text-sm"
+            placeholder="CORREO@EJEMPLO.COM"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-green-400 mb-2 pixel-text">
+            COMENTARIOS
+          </label>
+          <textarea
+            id="comentarios"
+            rows="3"
+            class="w-full px-4 py-2 bg-black border-2 border-green-500 text-green-400 placeholder-green-700 focus:outline-none focus:border-green-300 transition-all gaming-glow resize-none text-sm"
+            placeholder="ALERGIAS, ETC..."
+          ></textarea>
+        </div>
+
+        <button type="submit" id="form-submit" class="w-full px-6 py-4 bg-green-500 hover:bg-green-400 text-black font-bold text-sm transition-all pixel-text gaming-glow-strong border-4 border-green-600 active:translate-y-1">
+          <span id="form-text">✓ CONFIRMAR ASISTENCIA</span>
+          <span id="form-loading" class="hidden">⏳ ENVIANDO...</span>
+        </button>
+      </form>
+
+      <div id="form-feedback" class="mt-4 text-center min-h-[24px]">
+        <p id="form-error" class="text-red-500 text-xs hidden pixel-text">❌ ERROR AL ENVIAR</p>
+      </div>
+    `;
+
+    const form = document.getElementById('rsvp-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('form-submit') as HTMLButtonElement;
+    const formText = document.getElementById('form-text');
+    const formLoading = document.getElementById('form-loading');
+    const formError = document.getElementById('form-error');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      userData.nombre_padre = (document.getElementById('nombre_padre') as HTMLInputElement).value;
+      userData.telefono = (document.getElementById('telefono') as HTMLInputElement).value;
+      userData.email = (document.getElementById('email') as HTMLInputElement).value;
+      userData.comentarios = (document.getElementById('comentarios') as HTMLTextAreaElement).value;
+
+      submitBtn.disabled = true;
+      formText?.classList.add('hidden');
+      formLoading?.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/confirmar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData),
+        });
+
+        if (response.ok) {
+          currentStage++;
+          loadStage();
+        } else {
+          formError?.classList.remove('hidden');
+          submitBtn.disabled = false;
+          formText?.classList.remove('hidden');
+          formLoading?.classList.add('hidden');
+        }
+      } catch (error) {
+        formError?.classList.remove('hidden');
+        submitBtn.disabled = false;
+        formText?.classList.remove('hidden');
+        formLoading?.classList.add('hidden');
+      }
+    });
+  }
+
+  // FINAL: COMPLETION
+  function completeRSVP() {
+    if (!contentArea) return;
+    contentArea.innerHTML = `
+      <div class="text-center mb-6">
+        <div class="text-8xl gaming-glow animate-bounce">🎉</div>
+      </div>
+
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-green-400 pixel-heading gaming-glow leading-tight">
+        ¡CONFIRMADO!
+      </h2>
+
+      <div class="bg-black border-2 border-green-500 p-6 mb-6 relative">
+        <div class="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-green-500"></div>
+        <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
+
+        <p class="text-green-300 text-center leading-relaxed text-sm">
+          ¡Felicidades <strong class="text-green-400">${userData.nombre_nino}</strong>!<br/>
+          Te esperamos el <strong class="text-green-400">19 de Octubre</strong><br/>
+          en la sala <strong class="text-green-400">${userData.sala_preferida}</strong>
+        </p>
+      </div>
+
+      <p class="text-center text-green-500 text-xs pixel-text mb-4">
+        NOS VEMOS EN LA FIESTA! 🎮
+      </p>
+    `;
+
+    sessionStorage.setItem('rsvpCompleted', 'true');
+    if (progressBar) progressBar.style.width = '100%';
+
+    setTimeout(() => {
+      overlay?.classList.add('animate-fade-out');
+      setTimeout(() => {
+        overlay?.classList.add('hidden');
+      }, 500);
+    }, 3000);
+  }
+
+  // function skipGame() {
+  //   sessionStorage.setItem('rsvpCompleted', 'true');
+  //   window.location.href = '/confirmar';
+  // }
+
+  // skipBtn?.addEventListener('click', skipGame);
+</script>
+
+<style>
+  :global(select),
+  :global(::picker(select)) {
+    appearance: base-select;
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.5s ease-out;
+  }
+
+  .animate-fade-out {
+    animation: fade-out 0.5s ease-out forwards;
+  }
+
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+</style>

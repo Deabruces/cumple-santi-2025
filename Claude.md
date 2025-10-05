@@ -1,4 +1,4 @@
-Quiero generar un sitio chico dinamico en astro para el cumpleaños número 10 de mi hijo Santiago Saud, el cumple el 19 de Octubre, vamos a llevar a 12 de sus amigos a un scape room y luego a comer tipo picnic en el parque unas pizzas, y me gustaría que el sitio tenga la siguiente estructura:
+Quiero generar un sitio chico dinamico en astro para el cumpleaños número 10 de mi hijo Santiago Saud, el cumple el 19 de Octubre, y ese dia a las 16:00, vamos a llevar a 12 de sus amigos a un scape room y luego a comer tipo picnic en el parque unas pizzas, y me gustaría que el sitio tenga la siguiente estructura:
 
 1. Página de bienvenida: Una página con animaciones de entrada y salida, que diga "Bienvenidos al cumpleaños de Santiago Saud" con un diseño basado en el scape room el motivo de las 2 salas donde jugarán sera:
 
@@ -17,6 +17,8 @@ Definiciones Técnicas:
 - usar supabase como db de ser necesario
 - Incluir imágenes relevantes para las actividades.
 - Asegurar que el sitio sea responsivo y se vea bien en dispositivos móviles.
+- 100% responsivo con tailwindcss
+- Incluir un favicon y metadatos apropiados para SEO cosa que cuando lo envie por whatsapp se vea una preview bonita.
 
 La ubicacion del evento es https://escapology.cl queda en el parque araucano, en el centro de eventos centro parque: Presidente Riesco 5330, Santiago, Las Condes, Región Metropolitana
 

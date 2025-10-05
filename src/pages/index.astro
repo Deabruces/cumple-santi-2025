@@ -1,16 +1,270 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import EscapeGame from '../components/EscapeGame.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="Cumpleaños de Santiago Saud - 10 años"
+  description="Celebra el cumpleaños número 10 de Santiago Saud. 19 de Octubre a las 16:00 en Escapology - Escape Room + Picnic"
+>
+  <!-- Mini-juego de entrada -->
+  <EscapeGame />
+
+  <main class="relative overflow-hidden">
+    <!-- Gaming Floating Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="animate-float-slow absolute top-20 left-10 w-16 h-16 bg-green-500/20 gaming-glow" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
+      <div class="animate-float-medium absolute top-40 right-20 w-20 h-20 bg-green-400/20 gaming-glow" style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);"></div>
+      <div class="animate-float-fast absolute bottom-20 left-1/3 w-12 h-12 bg-green-300/20 gaming-glow" style="clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-12 md:py-20 relative z-10">
+      <div class="text-center animate-fade-in-up">
+        <!-- Pixel Border Title -->
+        <div class="inline-block mb-6 p-6 border-4 border-green-500 gaming-glow-strong relative">
+          <div class="absolute -top-2 -left-2 w-4 h-4 bg-green-500"></div>
+          <div class="absolute -top-2 -right-2 w-4 h-4 bg-green-500"></div>
+          <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-500"></div>
+          <div class="absolute -bottom-2 -right-2 w-4 h-4 bg-green-500"></div>
+          <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-green-400 pixel-heading leading-tight animate-shimmer">
+            CUMPLEAÑOS<br/>SANTIAGO SAUD
+          </h1>
+        </div>
+        <div class="text-6xl md:text-8xl mb-8 animate-bounce-slow gaming-glow">
+          🎮
+        </div>
+        <p class="text-4xl md:text-5xl mb-4 font-bold text-green-400 pixel-heading gaming-glow">
+          LEVEL 10
+        </p>
+        <p class="text-lg md:text-xl mb-8 text-green-300 pixel-heading">
+          📅 19 OCTUBRE 2025 - 16:00
+        </p>
+      </div>
+
+      <!-- Event Cards -->
+      <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mt-16">
+        <!-- Los Mineros Card -->
+        <div class="group bg-black border-4 border-green-500 overflow-hidden shadow-2xl transform transition-all duration-300 hover:translate-x-1 hover:translate-y-1 gaming-glow animate-slide-in-left relative">
+          <!-- Pixel Corners -->
+          <div class="absolute top-0 left-0 w-4 h-4 bg-green-500 z-10"></div>
+          <div class="absolute top-0 right-0 w-4 h-4 bg-green-500 z-10"></div>
+          <div class="absolute bottom-0 left-0 w-4 h-4 bg-green-500 z-10"></div>
+          <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 z-10"></div>
+
+          <div class="relative h-64 overflow-hidden border-b-4 border-green-500">
+            <img
+              src="/images/mineros.jpg"
+              alt="Escape Room Los Mineros"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 brightness-75 contrast-125"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent mix-blend-multiply"></div>
+            <div class="absolute top-4 right-4 px-3 py-1 bg-green-500 text-black font-bold text-sm pixel-text border-2 border-black">
+              ROOM 1
+            </div>
+          </div>
+          <div class="p-6 bg-black">
+            <h3 class="text-2xl md:text-3xl font-bold mb-3 text-green-400 pixel-heading">⛏️ LOS MINEROS</h3>
+            <p class="text-green-300 leading-relaxed text-sm">
+              Eres parte de un grupo de investigadores enviados a revisar las razones del derrumbe de una mina. De pronto, el techo vuelve a ceder y quedan atrapados. ¿Podrán encontrar la forma de escapar?
+            </p>
+          </div>
+        </div>
+
+        <!-- Bajo Presión Card -->
+        <div class="group bg-black border-4 border-green-500 overflow-hidden shadow-2xl transform transition-all duration-300 hover:translate-x-1 hover:translate-y-1 gaming-glow animate-slide-in-right relative">
+          <!-- Pixel Corners -->
+          <div class="absolute top-0 left-0 w-4 h-4 bg-green-500 z-10"></div>
+          <div class="absolute top-0 right-0 w-4 h-4 bg-green-500 z-10"></div>
+          <div class="absolute bottom-0 left-0 w-4 h-4 bg-green-500 z-10"></div>
+          <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 z-10"></div>
+
+          <div class="relative h-64 overflow-hidden border-b-4 border-green-500">
+            <img
+              src="/images/submarino.png"
+              alt="Escape Room Bajo Presión - Submarino"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 brightness-75 contrast-125"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent mix-blend-multiply"></div>
+            <div class="absolute top-4 right-4 px-3 py-1 bg-green-500 text-black font-bold text-sm pixel-text border-2 border-black">
+              ROOM 2
+            </div>
+          </div>
+          <div class="p-6 bg-black">
+            <h3 class="text-2xl md:text-3xl font-bold mb-3 text-green-400 pixel-heading">🚢 BAJO PRESION</h3>
+            <p class="text-green-300 leading-relaxed text-sm">
+              Es el año 1944, y estás a bordo de un submarino estadounidense, cuando de pronto los motores se apagan y la presión sube. Agentes alemanes han removido 6 tanques de oxígeno de su lugar y los han escondido a lo largo del submarino.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-16 animate-fade-in-up-delay">
+        <a
+          href="/actividades"
+          class="pixel-btn text-xs md:text-sm"
+        >
+          ▶ VER ACTIVIDADES
+        </a>
+        <a
+          href="/confirmar"
+          class="pixel-btn text-xs md:text-sm"
+        >
+          ✓ CONFIRMAR
+        </a>
+      </div>
+
+      <!-- Location Info -->
+      <div class="mt-16 text-center animate-fade-in-up-delay-2">
+        <div class="inline-block bg-black border-4 border-green-500 p-6 gaming-glow relative">
+          <!-- Pixel Corners -->
+          <div class="absolute -top-2 -left-2 w-4 h-4 bg-green-500"></div>
+          <div class="absolute -top-2 -right-2 w-4 h-4 bg-green-500"></div>
+          <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-500"></div>
+          <div class="absolute -bottom-2 -right-2 w-4 h-4 bg-green-500"></div>
+
+          <p class="text-sm mb-2 text-green-400 pixel-text">📍 ESCAPOLOGY</p>
+          <p class="text-green-300 text-sm">Parque Araucano - Centro Parque</p>
+          <p class="text-green-300 text-sm">Presidente Riesco 5330, Las Condes</p>
+          <a
+            href="https://escapology.cl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block mt-4 text-green-500 hover:text-green-400 transition-colors text-sm gaming-glow"
+          >
+            🌐 escapology.cl
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px);
+    }
+  }
+
+  @keyframes float-medium {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    50% {
+      transform: translateY(-30px) translateX(-15px);
+    }
+  }
+
+  @keyframes float-fast {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    50% {
+      transform: translateY(-25px) translateX(20px);
+    }
+  }
+
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up-delay {
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.3s forwards;
+  }
+
+  .animate-fade-in-up-delay-2 {
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.6s forwards;
+  }
+
+  .animate-slide-in-left {
+    opacity: 0;
+    animation: slide-in-left 0.8s ease-out 0.4s forwards;
+  }
+
+  .animate-slide-in-right {
+    opacity: 0;
+    animation: slide-in-right 0.8s ease-out 0.4s forwards;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+  }
+
+  .animate-float-medium {
+    animation: float-medium 8s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: float-fast 10s ease-in-out infinite;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+</style>
