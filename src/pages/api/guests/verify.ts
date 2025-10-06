@@ -6,12 +6,8 @@ import { eq, and } from 'drizzle-orm';
 export const POST: APIRoute = async ({ request }) => {
   try {
     const { userId, code } = await request.json();
-
     if (!userId || !code) {
-      return new Response(
-        JSON.stringify({ isValid: false }),
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ isValid: false }), { status: 400 });
     }
 
     const result = await db
@@ -19,7 +15,6 @@ export const POST: APIRoute = async ({ request }) => {
       .from(guests)
       .where(and(eq(guests.id, userId), eq(guests.code, code)))
       .limit(1);
-
     const guest = result[0];
 
     return new Response(
