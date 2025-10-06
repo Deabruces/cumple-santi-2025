@@ -163,7 +163,7 @@ export const Step1 = ({
           <div className='absolute -bottom-1 -right-1 w-3 h-3 bg-green-500'></div>
 
           <label className='block text-xs font-bold text-green-400 mb-2 pixel-text'>
-            CODIGO * (las primeras 4 letras de tu nombre + 10)
+            CÓDIGO * (las primeras 4 letras de tu nombre + 10)
           </label>
           <input
             type='text'
@@ -171,7 +171,7 @@ export const Step1 = ({
             maxLength={10}
             required
             className='w-full px-4 py-3 text-center text-lg font-bold bg-black border-2 border-green-500 text-green-400 focus:border-green-300 focus:outline-none transition-all gaming-glow pixel-text uppercase'
-            placeholder='CODIGO'
+            placeholder='CÓDIGO'
             value={codigo}
             onChange={handleCodigoChange}
           />
