@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { GuestInvitation } from '../components/GuestInvitation';
+import { RoomAssignments } from '../components/RoomAssignments';
+import { Countdown } from '../components/Countdown';
 ---
 
 <Layout
@@ -28,6 +31,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-xl text-green-300 pixel-heading">
             19 OCTUBRE 2025
           </p>
+        </div>
+
+        <!-- Guest Invitation Card -->
+        <GuestInvitation client:only="react" />
+
+        <!-- Countdown -->
+        <div class="max-w-2xl mx-auto mb-8">
+          <Countdown client:only="react" />
         </div>
 
         <!-- Timeline Gaming Style -->
@@ -80,7 +91,7 @@ import Layout from '../layouts/Layout.astro';
 
             <div class="grid md:grid-cols-2 gap-4 mt-4">
               <!-- Room 1 -->
-              <div class="bg-black border-2 border-green-500 overflow-hidden relative">
+              <div class="bg-black border-2 border-green-500 overflow-hidden relative" data-room="mineros">
                 <div class="absolute top-0 left-0 w-3 h-3 bg-green-500 z-10"></div>
                 <div class="absolute top-0 right-0 w-3 h-3 bg-green-500 z-10"></div>
                 <div class="absolute bottom-0 left-0 w-3 h-3 bg-green-500 z-10"></div>
@@ -99,6 +110,9 @@ import Layout from '../layouts/Layout.astro';
                   <div class="absolute bottom-2 left-2">
                     <h4 class="font-bold text-green-400 pixel-heading text-base">⛏️ MINEROS</h4>
                   </div>
+                  <div class="selected-badge hidden absolute top-2 left-2 px-2 py-1 bg-yellow-500 text-black pixel-text text-xs border-2 border-black gaming-glow-strong animate-pulse">
+                    ★ TU SALA
+                  </div>
                 </div>
                 <p class="text-green-300 text-xs p-3 leading-relaxed">
                   Investigadores atrapados en mina colapsada. Encuentra la salida antes que sea tarde.
@@ -106,7 +120,7 @@ import Layout from '../layouts/Layout.astro';
               </div>
 
               <!-- Room 2 -->
-              <div class="bg-black border-2 border-green-500 overflow-hidden relative">
+              <div class="bg-black border-2 border-green-500 overflow-hidden relative" data-room="bajo-presion">
                 <div class="absolute top-0 left-0 w-3 h-3 bg-green-500 z-10"></div>
                 <div class="absolute top-0 right-0 w-3 h-3 bg-green-500 z-10"></div>
                 <div class="absolute bottom-0 left-0 w-3 h-3 bg-green-500 z-10"></div>
@@ -125,6 +139,9 @@ import Layout from '../layouts/Layout.astro';
                   <div class="absolute bottom-2 left-2">
                     <h4 class="font-bold text-green-400 pixel-heading text-base">🚢 SUBMARINO</h4>
                   </div>
+                  <div class="selected-badge hidden absolute top-2 left-2 px-2 py-1 bg-yellow-500 text-black pixel-text text-xs border-2 border-black gaming-glow-strong animate-pulse">
+                    ★ TU SALA
+                  </div>
                 </div>
                 <p class="text-green-300 text-xs p-3 leading-relaxed">
                   1944. Submarino sin oxígeno. Encuentra los 6 tanques escondidos.
@@ -137,10 +154,13 @@ import Layout from '../layouts/Layout.astro';
               <div class="absolute -top-1 -right-1 w-2 h-2 bg-green-500"></div>
               <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-green-500"></div>
               <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500"></div>
-              <p class="text-xs text-green-300 text-center">
-                <strong class="text-green-400 pixel-text">INFO:</strong> 2 grupos de 6 jugadores
+              <p class="text-xs text-green-300 pixel-text text-center">
+                <strong class="text-green-400 ">INFO:</strong> 2 grupos de 6 jugadores
               </p>
             </div>
+
+            <!-- Room Assignments Component -->
+            <RoomAssignments client:only="react" />
           </div>
 
           <!-- Activity 3: Picnic -->
@@ -247,16 +267,6 @@ import Layout from '../layouts/Layout.astro';
             </div>
           </div>
         </div>
-
-        <!-- CTA -->
-        <div class="text-center mt-12 animate-fade-in" style="animation-delay: 0.6s;">
-          <a
-            href="/confirmar"
-            class="pixel-btn text-xs md:text-sm"
-          >
-            ✓ CONFIRMAR ASISTENCIA
-          </a>
-        </div>
       </div>
     </section>
   </main>
@@ -292,3 +302,31 @@ import Layout from '../layouts/Layout.astro';
     animation: slide-up 0.8s ease-out forwards;
   }
 </style>
+
+<script>
+  // Redirect to home if no guest name in storage
+  const guestName = sessionStorage.getItem('guestName');
+  if (!guestName) {
+    window.location.href = '/';
+  }
+
+  // Highlight user's selected room
+  document.addEventListener('DOMContentLoaded', () => {
+    const guestRoom = sessionStorage.getItem('guestRoom');
+
+    if (guestRoom) {
+      const roomCard = document.querySelector(`[data-room="${guestRoom}"]`);
+      if (roomCard) {
+        // Add highlight border
+        roomCard.classList.remove('border-green-500');
+        roomCard.classList.add('border-yellow-500', 'border-4', 'gaming-glow-strong');
+
+        // Show "TU SALA" badge
+        const badge = roomCard.querySelector('.selected-badge');
+        if (badge) {
+          badge.classList.remove('hidden');
+        }
+      }
+    }
+  });
+</script>
