@@ -8,7 +8,7 @@ export default defineConfig({
 	// Configura tu URL de producción aquí para que los metadatos OG funcionen correctamente
 	// Ejemplo: site: 'https://cumple-santiago.vercel.app'
 	// site: 'https://tu-sitio.com',
-	site: "https://cumple-santi-2025.deannybruces.com",
+	site: "https://cumple-santi-2025.scyphora.com",
 	output: "server",
 	vite: {
 		plugins: [tailwindcss()],
