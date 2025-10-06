@@ -1,91 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import "tailwindcss";
 
 /* Gaming Pixel Fonts */
 
 /* Pixel Art Utilities */
 .pixel-text {
-  font-family: 'Press Start 2P', cursive;
-  image-rendering: pixelated;
-  text-rendering: optimizeSpeed;
+	font-family: "Press Start 2P", cursive;
+	image-rendering: pixelated;
+	text-rendering: optimizeSpeed;
 }
 
 .pixel-heading {
-  font-family: 'Press Start 2P', cursive;
-  font-weight: 700;
-  image-rendering: pixelated;
-  text-rendering: optimizeSpeed;
-  letter-spacing: 0.05em;
+	font-family: "Press Start 2P", cursive;
+	font-weight: 700;
+	image-rendering: pixelated;
+	text-rendering: optimizeSpeed;
+	letter-spacing: 0.05em;
 }
 
 .pixel-borders {
-  border-style: solid;
-  border-image: repeating-linear-gradient(
-      90deg,
-      #00ff41 0px,
-      #00ff41 2px,
-      transparent 2px,
-      transparent 4px
-    )
-    1;
-  image-rendering: pixelated;
+	border-style: solid;
+	border-image: repeating-linear-gradient(
+			90deg,
+			#00ff41 0px,
+			#00ff41 2px,
+			transparent 2px,
+			transparent 4px
+		)
+		1;
+	image-rendering: pixelated;
 }
 
 /* Gaming Green Glow Effect */
 .gaming-glow {
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3),
-    0 0 30px rgba(0, 255, 65, 0.2);
+	box-shadow:
+		0 0 10px rgba(0, 255, 65, 0.5),
+		0 0 20px rgba(0, 255, 65, 0.3),
+		0 0 30px rgba(0, 255, 65, 0.2);
 }
 
 .gaming-glow-strong {
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.8), 0 0 40px rgba(0, 255, 65, 0.6),
-    0 0 60px rgba(0, 255, 65, 0.4);
+	box-shadow:
+		0 0 20px rgba(0, 255, 65, 0.8),
+		0 0 40px rgba(0, 255, 65, 0.6),
+		0 0 60px rgba(0, 255, 65, 0.4);
 }
 
 /* Scanline Effect */
 .scanlines {
-  position: relative;
+	position: relative;
 }
 
 .scanlines::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.1) 0px,
-    rgba(0, 0, 0, 0.1) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  pointer-events: none;
-  z-index: 1;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: repeating-linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0.1) 0px,
+		rgba(0, 0, 0, 0.1) 1px,
+		transparent 1px,
+		transparent 2px
+	);
+	pointer-events: none;
+	z-index: 1;
 }
 
 /* Pixel Button */
 .pixel-btn {
-  position: relative;
-  font-family: 'Press Start 2P', cursive;
-  text-transform: uppercase;
-  padding: 12px 24px;
-  background: #00ff41;
-  color: #000;
-  border: 4px solid #000;
-  box-shadow: 4px 4px 0 #000, 0 0 20px rgba(0, 255, 65, 0.5);
-  transition: all 0.1s ease;
-  image-rendering: pixelated;
+	position: relative;
+	font-family: "Press Start 2P", cursive;
+	text-transform: uppercase;
+	padding: 12px 24px;
+	background: #00ff41;
+	color: #000;
+	border: 4px solid #000;
+	box-shadow:
+		4px 4px 0 #000,
+		0 0 20px rgba(0, 255, 65, 0.5);
+	transition: all 0.1s ease;
+	image-rendering: pixelated;
 }
 
 .pixel-btn:hover {
-  background: #39ff14;
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 #000, 0 0 30px rgba(0, 255, 65, 0.8);
+	background: #39ff14;
+	transform: translate(2px, 2px);
+	box-shadow:
+		2px 2px 0 #000,
+		0 0 30px rgba(0, 255, 65, 0.8);
 }
 
 .pixel-btn:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0 0 0 #000;
+	transform: translate(4px, 4px);
+	box-shadow: 0 0 0 #000;
 }
