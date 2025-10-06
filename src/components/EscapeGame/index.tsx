@@ -1,4 +1,4 @@
-import { get } from "@repositories/RepositoryComposite";
+import { get } from "@repositories/RepositoryCompositeClient";
 import { useEffect, useId, useState } from "react";
 import type { Guest } from "../../db/schemas";
 import { Step1 } from "./steps/step1";

@@ -1,5 +1,5 @@
 import { Countdown } from "@components/Countdown";
-import { get } from "@repositories/RepositoryComposite";
+import { get } from "@repositories/RepositoryCompositeClient";
 import { useId, useState } from "react";
 
 const GuestsRepository = await get("guestsClient");

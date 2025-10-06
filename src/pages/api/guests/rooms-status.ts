@@ -1,4 +1,4 @@
-import { get } from "@repositories/RepositoryComposite";
+import { get } from "@repositories/RepositoryCompositeServer";
 import type { APIRoute } from "astro";
 
 const GuestsRepository = await get("guestsServer");

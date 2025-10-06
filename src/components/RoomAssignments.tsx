@@ -1,4 +1,4 @@
-import { get } from "@repositories/RepositoryComposite";
+import { get } from "@repositories/RepositoryCompositeClient";
 import { useEffect, useState } from "react";
 
 const GuestsRepository = await get("guestsClient");

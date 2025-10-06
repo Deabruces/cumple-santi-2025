@@ -9,7 +9,7 @@ export default defineConfig({
 	// Ejemplo: site: 'https://cumple-santiago.vercel.app'
 	// site: 'https://tu-sitio.com',
 	site: "https://cumple-santi-2025.deannybruces.com",
-	output: "static",
+	output: "server",
 	vite: {
 		plugins: [tailwindcss()],
 	},
