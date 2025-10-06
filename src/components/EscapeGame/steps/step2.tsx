@@ -5,12 +5,9 @@ interface Step2Props {
   setSelectedGuest: (id: number | null) => void;
 }
 
-export const Step2 = ({
-  guests,
-  selectedGuest,
-  goNextStep,
-}: Step2Props) => {
-  const guestName = guests.find((g) => g.id === selectedGuest)?.name || 'Invitado';
+export const Step2 = ({ guests, selectedGuest, goNextStep }: Step2Props) => {
+  const guestName =
+    guests.find((g) => g.id === selectedGuest)?.name || 'Invitado';
 
   return (
     <div id='content-area'>
@@ -19,12 +16,12 @@ export const Step2 = ({
       </div>
 
       <h2 className='text-2xl md:text-3xl font-bold text-center mb-4 text-green-400 pixel-heading gaming-glow leading-tight'>
-        ¡BIENVENIDO {guestName.toUpperCase()}!
+        ¡BIENVENID@ {guestName.toUpperCase()}!
       </h2>
 
       <p className='text-center text-green-300 mb-6 text-sm pixel-text px-4'>
-        Estás a punto de iniciar una aventura épica para el cumpleaños #10 de Santiago.
-        ¿Estás listo?
+        Estás a punto de iniciar una aventura épica para el cumpleaños #10 de
+        Santiago. ¿Estás listo?
       </p>
 
       <div className='bg-black border-2 border-green-500 p-6 mb-6 relative'>
