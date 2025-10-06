@@ -36,10 +36,11 @@ export const Step1 = ({
       setHasError(true);
       return;
     }
-    const { isValid, hasCompletedGame, roomAssigned } = await GuestsRepository.verifyUser({
-      code: codigo,
-      userId: selectedGuest,
-    });
+    const { isValid, hasCompletedGame, roomAssigned } =
+      await GuestsRepository.verifyUser({
+        code: codigo,
+        userId: selectedGuest,
+      });
     if (!isValid) {
       const newCount = invalidCount + 1;
       const newHealth = health - 1;
@@ -55,7 +56,8 @@ export const Step1 = ({
       setHasError(false);
       // If user already completed, redirect to activities with their info
       if (hasCompletedGame && roomAssigned) {
-        const guestName = guests.find((g) => g.id === selectedGuest)?.name || 'Invitado';
+        const guestName =
+          guests.find((g) => g.id === selectedGuest)?.name || 'Invitado';
         sessionStorage.setItem('rsvpCompleted', 'true');
         sessionStorage.setItem('guestName', guestName);
         sessionStorage.setItem('guestRoom', roomAssigned);
@@ -111,7 +113,7 @@ export const Step1 = ({
         <div className='text-6xl mb-2'>🎫</div>
       </div>
 
-      <h2 className='text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight'>
+      <h2 className='text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight py-2'>
         INVITACIÓN ENCRIPTADA
       </h2>
 
@@ -161,7 +163,7 @@ export const Step1 = ({
           <div className='absolute -bottom-1 -right-1 w-3 h-3 bg-green-500'></div>
 
           <label className='block text-xs font-bold text-green-400 mb-2 pixel-text'>
-            CODIGO *
+            CODIGO * (las primeras 4 letras de tu nombre + 10)
           </label>
           <input
             type='text'
