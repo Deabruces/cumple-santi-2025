@@ -140,13 +140,13 @@ export const Step1 = ({
 						htmlFor={`nombre-select-${step1Id}`}
 						className="block text-xs font-bold text-green-400 mb-2 pixel-text"
 					>
-						TU NOMBRE *
+						NOMBRE *
 					</label>
 					<select
 						id={`nombre-select-${step1Id}`}
 						defaultValue=""
 						required
-						className="w-full px-4 py-3 bg-black border-2 border-green-500 text-green-400 pixel-text focus:outline-none focus:border-green-300 transition-all gaming-glow text-sm"
+						className="w-full px-4 py-3 bg-black border-2 border-green-500 text-green-400 pixel-text focus:outline-none focus:border-green-300 transition-all gaming-glow text-sm appearance-none custom-select"
 						onChange={handleGuestSelect}
 					>
 						<option value="" disabled className="bg-black text-green-400 py-3">
@@ -159,7 +159,7 @@ export const Step1 = ({
 									<option
 										key={guest.id}
 										value={guest.id}
-										className="bg-black text-green-400 py-3"
+										className="bg-black text-green-400 py-6 appearance-none"
 									>
 										{guest.name}
 									</option>

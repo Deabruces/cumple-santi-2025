@@ -15,8 +15,15 @@ import { EscapeGameReact } from "./EscapeGame/index";
 
 <style>
   :global(select),
-  :global(::picker(select)) {
-    appearance: base-select;
+  {
+    appearance: none;
+padding-block: 20px;
+  }
+  @supports (appearance: base-select) {
+    :global(select),
+    :global(::picker(select)) {
+      appearance: base-select;
+    }
   }
   @keyframes scale-in {
     from {

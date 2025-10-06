@@ -43,12 +43,12 @@ export const Countdown = () => {
 			<div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500"></div>
 
 			<h3 className="text-2xl md:text-3xl font-bold mb-4 text-center text-green-400 pixel-heading">
-				⏰ CUENTA REGRESIVA
+				⏰ ESTE MENSAJE SE AUTODESTRUIRA EN 💣
 			</h3>
 
 			<div className="grid grid-cols-4 gap-2 md:gap-3 mb-4">
 				<div className="bg-black border-2 border-green-500 p-2 md:p-3 text-center">
-					<div className="text-2xl md:text-4xl font-bold text-green-400 pixel-heading">
+					<div className="text-xl md:text-3xl font-bold text-green-400 pixel-heading">
 						{timeLeft.days}
 					</div>
 					<div className="text-[0.6rem] md:text-xs text-green-300 pixel-text mt-1">
@@ -56,7 +56,7 @@ export const Countdown = () => {
 					</div>
 				</div>
 				<div className="bg-black border-2 border-green-500 p-2 md:p-3 text-center">
-					<div className="text-2xl md:text-4xl font-bold text-green-400 pixel-heading">
+					<div className="text-xl md:text-3xl font-bold text-green-400 pixel-heading">
 						{timeLeft.hours}
 					</div>
 					<div className="text-[0.6rem] md:text-xs text-green-300 pixel-text mt-1">
@@ -64,7 +64,7 @@ export const Countdown = () => {
 					</div>
 				</div>
 				<div className="bg-black border-2 border-green-500 p-2 md:p-3 text-center">
-					<div className="text-2xl md:text-4xl font-bold text-green-400 pixel-heading">
+					<div className="text-xl md:text-3xl font-bold text-green-400 pixel-heading">
 						{timeLeft.minutes}
 					</div>
 					<div className="text-[0.6rem] md:text-xs text-green-300 pixel-text mt-1">
@@ -72,7 +72,7 @@ export const Countdown = () => {
 					</div>
 				</div>
 				<div className="bg-black border-2 border-green-500 p-2 md:p-3 text-center">
-					<div className="text-2xl md:text-4xl font-bold text-green-400 pixel-heading">
+					<div className="text-xl md:text-3xl font-bold text-green-400 pixel-heading">
 						{timeLeft.seconds}
 					</div>
 					<div className="text-[0.6rem] md:text-xs text-green-300 pixel-text mt-1">

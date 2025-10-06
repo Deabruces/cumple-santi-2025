@@ -6,10 +6,10 @@ type RepositoryTypeMap = {
 	guestsServer: typeof GuestsRepository;
 	// Add other repositories here as needed
 };
-
-export async function get<K extends keyof RepositoryTypeMap>(
-	repoId: K,
-): Promise<RepositoryTypeMap[K]> {
+type RepositoryUnion = typeof GuestsRepositoryClient | typeof GuestsRepository;
+export function get(input:"guestsClient"): Promise<typeof GuestsRepositoryClient>;
+export function get(input:"guestsServer"): Promise<typeof GuestsRepository>;
+export async function get(repoId: keyof RepositoryTypeMap): Promise<RepositoryUnion>{
 	if (repoId === "guestsClient") {
 		const repo = (await import("./GuestsRepositoryClient").then(
 			(mod) => mod.GuestsRepositoryClient,
@@ -23,4 +23,4 @@ export async function get<K extends keyof RepositoryTypeMap>(
 		return repo;
 	}
 	throw new Error(`Repository with id ${repoId} not found.`);
-}
+};
