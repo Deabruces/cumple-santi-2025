@@ -62,7 +62,7 @@ export const Step4 = ({ goNextStep }: Step4Props) => {
 					<div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500"></div>
 
 					<p className="text-green-400 text-xs font-bold pixel-text mb-2">
-						🎮 ACTIVIDADES
+						⚽️ ACTIVIDADES
 					</p>
 					<ul className="text-green-300 text-sm pixel-text space-y-1">
 						<li>• Escape Room (2 salas increíbles)</li>
