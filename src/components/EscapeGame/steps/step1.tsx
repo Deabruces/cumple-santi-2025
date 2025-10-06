@@ -1,3 +1,4 @@
+import { Countdown } from "@components/Countdown";
 import { get } from "@repositories/RepositoryComposite";
 import { useId, useState } from "react";
 
@@ -125,9 +126,9 @@ export const Step1 = ({
 			</h2>
 
 			<p className="text-center text-green-300 mb-4 text-xs pixel-text py-4">
-				Ingresa el código que Santiago te dio
+				Solo puedo decir que es el 19 de octubre a las 15:45 pm
 			</p>
-
+		
 			<div className="space-y-4 mb-4">
 				<div className="bg-black border-2 border-green-500 p-4 relative">
 					<div className="absolute -top-1 -left-1 w-3 h-3 bg-green-500"></div>
@@ -176,7 +177,7 @@ export const Step1 = ({
 						htmlFor={`codigo-input-${step1Id}`}
 						className="block text-xs font-bold text-green-400 mb-2 pixel-text"
 					>
-						CÓDIGO * (las primeras 4 letras de tu nombre + 10)
+						CÓDIGO *
 					</label>
 					<input
 						type="text"
@@ -190,7 +191,7 @@ export const Step1 = ({
 					/>
 				</div>
 			</div>
-
+			
 			<div
 				id={`codigo-feedback-${step1Id}`}
 				className="text-center mb-4 min-h-[24px]"
@@ -214,6 +215,9 @@ export const Step1 = ({
 			>
 				▶ VERIFICAR
 			</button>
+			<div className="my-10">
+				<Countdown />
+			</div>
 		</form>
 	);
 };

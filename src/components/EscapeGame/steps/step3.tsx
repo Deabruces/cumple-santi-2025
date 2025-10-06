@@ -10,26 +10,36 @@ interface Step3Props {
 	goPreviousStep: () => void;
 }
 
-const QUESTIONS = [
+type Question = {
+	question: string;
+	inputMode?: "text" | "numeric";
+	answers: string[];
+};
+const QUESTIONS: Question[] = [
 	{
 		question: "¿Cuántos años cumple Santiago?",
+		inputMode: "numeric",
 		answers: ["10", "diez"],
 	},
 	{
 		question: "Si x + 7 = 15, ¿cuánto vale x?",
+		inputMode: "numeric",
 		answers: ["8", "ocho"],
 	},
 	{
 		question: "¿En qué mes es su cumpleaños?",
+		inputMode: "text",
 		answers: ["octubre", "10", "diez"],
 	},
 	{
 		question: "¿Cuánto es 12 × 3?",
+		inputMode: "numeric",
 		answers: ["36", "treinta y seis"],
 	},
 	{
 		question:
 			"¿Si santi cumple el 19 de octubre, qué día de la semana es su cumpleaños?",
+		inputMode: "text",
 		answers: ["domingo"],
 	},
 ];
@@ -124,7 +134,7 @@ export const Step3 = ({
 				<div className="text-6xl mb-2">🔐</div>
 			</div>
 
-			<h2 className="text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight">
+			<h2 className="text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight py-4">
 				VERIFICACIÓN DE SEGURIDAD
 			</h2>
 
@@ -144,8 +154,11 @@ export const Step3 = ({
 
 				<input
 					type="text"
+					name={`response-${currentQuestion}`}
+					id={`response-${currentQuestion}`}
 					value={answer}
 					ref={responseRef}
+					inputMode={QUESTIONS[currentQuestion].inputMode || "text"}
 					onChange={(e) => setAnswer(e.target.value)}
 					required
 					className="w-full px-4 py-3 text-center bg-black border-2 border-green-500 text-green-400 focus:border-green-300 focus:outline-none transition-all gaming-glow pixel-text"

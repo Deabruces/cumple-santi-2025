@@ -15,7 +15,7 @@ export const Step4 = ({ goNextStep }: Step4Props) => {
 				<div className="text-6xl mb-2">📅</div>
 			</div>
 
-			<h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-green-400 pixel-heading gaming-glow leading-tight">
+			<h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-green-400 pixel-heading gaming-glow leading-tight py-4">
 				DETALLES DE LA MISIÓN
 			</h2>
 
