@@ -59,6 +59,23 @@ export const Step4 = ({ goNextStep }: Step4Props) => {
         </div>
       </div>
 
+      {/* Warning */}
+      <div className='bg-yellow-900 border-2 border-yellow-500 p-4 mb-6 relative'>
+        <div className='absolute -top-1 -left-1 w-3 h-3 bg-yellow-500'></div>
+        <div className='absolute -top-1 -right-1 w-3 h-3 bg-yellow-500'></div>
+        <div className='absolute -bottom-1 -left-1 w-3 h-3 bg-yellow-500'></div>
+        <div className='absolute -bottom-1 -right-1 w-3 h-3 bg-yellow-500'></div>
+
+        <p className='text-yellow-400 text-xs font-bold pixel-text mb-2 flex items-center justify-center gap-2'>
+          <span>⚠️</span>
+          <span>IMPORTANTE</span>
+          <span>⚠️</span>
+        </p>
+        <p className='text-yellow-300 text-xs pixel-text text-center'>
+          No cierres esta página hasta confirmar tu asistencia en el siguiente paso
+        </p>
+      </div>
+
       <button
         onClick={goNextStep}
         className='w-full px-6 py-4 bg-green-500 hover:bg-green-400 text-black font-bold text-sm transition-all pixel-text gaming-glow-strong border-4 border-green-600 active:translate-y-1'
