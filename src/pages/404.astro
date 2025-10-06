@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="404 - Página no encontrada | Cumple Santi"
+  description="La página que buscas no existe"
+>
+  <div class="min-h-screen flex items-center justify-center px-4 relative z-10">
+    <div class="text-center max-w-2xl mx-auto">
+      <!-- Error Code -->
+      <div class="mb-12">
+        <h1 class="text-6xl md:text-8xl lg:text-10xl font-black text-green-500 glitch-text leading-none">
+          404
+        </h1>
+      </div>
+
+      <!-- Message -->
+      <div class="space-y-6 mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-green-400">
+          ¡Oops! Te perdiste en el escape room
+        </h2>
+        <p class="text-xl md:text-2xl text-green-300/80">
+          Parece que esta página está tan escondida como las pistas en la mina...
+          ¡No pudimos encontrarla!
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row gap-6 justify-center my-8">
+        <a
+          href="/"
+          class="px-8 py-4 bg-green-500 text-black font-bold rounded-lg hover:bg-green-400 transition-all transform hover:scale-105 border-2 border-green-400 shadow-lg shadow-green-500/50"
+        >
+          Volver al inicio
+        </a>
+        <a
+          href="/actividades"
+          class="px-8 py-4 mt-4 bg-transparent text-green-400 font-bold rounded-lg border-2 border-green-500 hover:bg-green-500 hover:text-black transition-all transform hover:scale-105"
+        >
+          Ver actividades
+        </a>
+      </div>
+
+      <!-- Decorative elements -->
+      <div class="mt-16 opacity-50">
+        <div class="flex justify-center gap-4 text-green-500/30 text-4xl">
+          <span class="animate-pulse">🔦</span>
+          <span class="animate-pulse delay-100">🔑</span>
+          <span class="animate-pulse delay-200">🧩</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .glitch-text {
+    position: relative;
+    animation: glitch 2s infinite;
+  }
+
+  @keyframes glitch {
+    0% {
+      text-shadow:
+        0.05em 0 0 rgba(255, 0, 0, 0.75),
+        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    14% {
+      text-shadow:
+        0.05em 0 0 rgba(255, 0, 0, 0.75),
+        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    15% {
+      text-shadow:
+        -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+        0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+        -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    49% {
+      text-shadow:
+        -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+        0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+        -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    50% {
+      text-shadow:
+        0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+        0.05em 0 0 rgba(0, 255, 0, 0.75),
+        0 -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    99% {
+      text-shadow:
+        0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+        0.05em 0 0 rgba(0, 255, 0, 0.75),
+        0 -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+    100% {
+      text-shadow:
+        -0.025em 0 0 rgba(255, 0, 0, 0.75),
+        -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+        -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+</style>

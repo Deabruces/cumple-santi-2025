@@ -1,0 +1,82 @@
+{
+  "name": "Cumpleaños de Santiago Saud",
+  "short_name": "Cumple Santi",
+  "description": "Celebra el cumpleaños número 10 de Santiago Saud - Escape Room + Picnic",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicons/android-icon-36x36.png",
+      "sizes": "36x36",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicons/android-icon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicons/android-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicons/android-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicons/android-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicons/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicons/ms-icon-310x310.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ir con Waze",
+      "short_name": "Waze",
+      "description": "Navegar a Escapology con Waze",
+      "url": "https://waze.com/ul?q=Presidente%20Riesco%205330%2C%20Las%20Condes%2C%20Santiago&navigate=yes",
+      "icons": [
+        {
+          "src": "/favicons/android-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Ir con Google Maps",
+      "short_name": "Maps",
+      "description": "Navegar a Escapology con Google Maps",
+      "url": "https://www.google.com/maps/dir/?api=1&destination=Presidente+Riesco+5330,+Las+Condes,+Santiago",
+      "icons": [
+        {
+          "src": "/favicons/android-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
