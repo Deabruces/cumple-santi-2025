@@ -101,7 +101,7 @@ cumple-santi-2025/
 - Si NO existe → continúa a ETAPA 2
 - Si YA existe → salta directo a PERFIL
 
-**ETAPA 2: Bienvenida** (🎮)
+**ETAPA 2: Bienvenida** (⚽️)
 
 - Mensaje personalizado: "Bienvenido [NOMBRE]"
 - Botón COMENZAR

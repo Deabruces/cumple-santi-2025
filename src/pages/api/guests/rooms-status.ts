@@ -3,7 +3,6 @@ import type { APIRoute } from "astro";
 
 const GuestsRepository = await get("guestsServer");
 
-export const prerender = false;
 
 export const GET: APIRoute = async () => {
 	try {

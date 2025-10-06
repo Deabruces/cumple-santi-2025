@@ -28,7 +28,7 @@ Puedes usar esta plantilla para imprimir las tarjetas:
 ```
 ╔══════════════════════════════════════════╗
 ║                                          ║
-║    🎮 CUMPLEAÑOS SANTIAGO SAUD 🎮       ║
+║    ⚽️ CUMPLEAÑOS SANTIAGO SAUD ⚽️       ║
 ║           ★ LEVEL 10 ★                   ║
 ║                                          ║
 ║  Para: [NOMBRE DEL INVITADO]             ║

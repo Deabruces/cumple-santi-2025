@@ -2,7 +2,6 @@ import { get } from "@repositories/RepositoryCompositeServer";
 import type { APIRoute } from "astro";
 
 const GuestsRepository = await get("guestsServer");
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
 	try {

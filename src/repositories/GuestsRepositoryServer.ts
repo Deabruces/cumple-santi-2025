@@ -1,7 +1,7 @@
 import { and, eq, isNotNull, sql } from "drizzle-orm";
 import * as drizzleSchema from "../db/schemas/index";
 import { db } from "./clients/DrizzleClient";
-export const prerender = false;
+
 const client = db;
 const schema = drizzleSchema.guests;
 export const GuestsRepositoryServer = {
