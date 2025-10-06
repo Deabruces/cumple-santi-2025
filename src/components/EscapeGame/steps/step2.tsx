@@ -14,8 +14,8 @@ export const Step2 = ({ guests, selectedGuest, goNextStep }: Step2Props) => {
 
 	return (
 		<div id={`content-area-${step2Id}`}>
-			<div className="text-center mb-6 gaming-glow">
-				<div className="text-6xl mb-4">⚽️</div>
+			<div className="text-center mb-6 gaming-glow py-4">
+				<div className="text-6xl">⚽️</div>
 			</div>
 
 			<h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-green-400 pixel-heading gaming-glow leading-tight py-4">

@@ -118,7 +118,7 @@ export const Step1 = ({
 	return (
 		<form id={`content-area-${step1Id}`} onSubmit={validateCodigo}>
 			<div className="text-center mb-4 gaming-glow ">
-				<div className="text-6xl mb-2">🎫</div>
+				<div className="text-6xl py-2">🎫</div>
 			</div>
 
 			<h2 className="text-2xl md:text-3xl font-bold text-center mb-2 text-green-400 pixel-heading gaming-glow leading-tight py-2">

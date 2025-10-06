@@ -42,7 +42,7 @@ export const Countdown = () => {
 			<div className="absolute -bottom-2 -left-2 w-6 h-6 bg-green-500"></div>
 			<div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500"></div>
 
-			<h3 className="text-2xl md:text-3xl font-bold mb-4 text-center text-green-400 pixel-heading">
+			<h3 className="text-xl md:text-3xl font-bold mb-4 text-center text-green-400 pixel-heading">
 				⏰ ESTE MENSAJE SE AUTODESTRUIRA EN 💣
 			</h3>
 
