@@ -2,6 +2,7 @@ import { get } from "@repositories/RepositoryCompositeClient";
 import { useEffect, useId, useState } from "react";
 
 const GuestsRepository = await get("guestsClient");
+const MAX_ROOM_CAPACITY = 7;
 
 interface Step5Props {
 	guests: { id: number; name: string }[];
@@ -19,7 +20,7 @@ const ROOMS = [
 		emoji: "⛏️",
 		description:
 			"Descubre los secretos de la mina abandonada y encuentra la salida",
-		capacity: 6,
+		capacity: MAX_ROOM_CAPACITY,
 	},
 	{
 		id: "bajo-presion",
@@ -27,7 +28,7 @@ const ROOMS = [
 		emoji: "🚢",
 		description:
 			"Encuentra los tanques de oxígeno ocultos antes de que sea tarde",
-		capacity: 6,
+		capacity: MAX_ROOM_CAPACITY,
 	},
 ];
 
@@ -55,11 +56,11 @@ export const Step5 = ({
 				setRoomsStatus(status);
 
 				// Auto-assign if one room is full
-				if (status.mineros.count >= 6 && status["bajo-presion"].count < 6) {
+				if (status.mineros.count >= MAX_ROOM_CAPACITY && status["bajo-presion"].count < MAX_ROOM_CAPACITY) {
 					setTempSelection("bajo-presion");
 				} else if (
-					status["bajo-presion"].count >= 6 &&
-					status.mineros.count < 6
+					status["bajo-presion"].count >= MAX_ROOM_CAPACITY &&
+					status.mineros.count < MAX_ROOM_CAPACITY
 				) {
 					setTempSelection("mineros");
 				}
@@ -78,7 +79,7 @@ export const Step5 = ({
 				roomsStatus[tempSelection as keyof typeof roomsStatus].count;
 			let finalRoom = tempSelection;
 
-			if (roomCount >= 6) {
+			if (roomCount >= MAX_ROOM_CAPACITY) {
 				// Auto-assign to the other room silently
 				finalRoom = tempSelection === "mineros" ? "bajo-presion" : "mineros";
 			}
@@ -118,7 +119,7 @@ export const Step5 = ({
 				{ROOMS.map((room) => {
 					const roomData = roomsStatus?.[room.id as keyof typeof roomsStatus];
 					const currentCount = roomData?.count || 0;
-					const isFull = currentCount >= 6;
+					const isFull = currentCount >= MAX_ROOM_CAPACITY;
 					const progressWidth = (currentCount / room.capacity) * 100;
 
 					return (

@@ -62,7 +62,7 @@ export const RoomAssignments = () => {
 								{room.emoji} {room.name}
 							</p>
 							<span className="text-green-300 text-xs pixel-text">
-								{room.data.count}/6
+								{room.data.count}/7
 							</span>
 						</div>
 
