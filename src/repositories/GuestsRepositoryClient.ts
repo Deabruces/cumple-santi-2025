@@ -33,4 +33,10 @@ export const GuestsRepositoryClient = {
 	}> {
 		return client.get("/rooms-status");
 	},
+	async resignInvitation({ userId }: { userId: number }): Promise<{ success: boolean }> {
+		return client.post(`/resign-invitation`, { userId });
+	},
+	async resignInvitationWithGuestName({ guestName }: { guestName: string }): Promise<{ success: boolean }> {
+		return client.post(`/resign-invitation-with-guestname`, { guestName });
+	}
 };

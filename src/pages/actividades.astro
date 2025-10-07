@@ -276,6 +276,27 @@ export const prerender = true;
             </div>
           </div>
         </div>
+        <!-- Location Card -->
+        <div class="mt-12 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.5s;">
+          <div class="bg-black border-4 border-red-500 p-6 gaming-glow-danger relative">
+            <div class="absolute -top-2 -left-2 w-6 h-6 bg-red-500"></div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-red-500"></div>
+            <div class="absolute -bottom-2 -left-2 w-6 h-6 bg-red-500"></div>
+            <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-red-500"></div>
+
+            <h3 class="text-3xl font-bold mb-4 text-center text-red-400 pixel-heading">¿No puedes asistir?</h3>
+            <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+              
+              <button
+                class="pixel-btn-danger text-xs"
+                id="resign-button"
+                type="button"
+              >
+                🥺 click aqui para no jugar 😢
+            </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -315,6 +336,7 @@ export const prerender = true;
 <script>
   // Redirect to home if no guest name in storage
   const guestName = sessionStorage.getItem('guestName');
+  const resignButton = document.getElementById('resign-button')! as HTMLButtonElement;
   if (!guestName) {
     window.location.href = '/';
   }
@@ -322,6 +344,14 @@ export const prerender = true;
   // Highlight user's selected room
   document.addEventListener('DOMContentLoaded', () => {
     const guestRoom = sessionStorage.getItem('guestRoom');
+    const cancelled = sessionStorage.getItem('cancelled');
+    if (cancelled === 'true') {
+      resignButton?.setAttribute('disabled', 'true');
+      resignButton?.classList.add('opacity-50', 'cursor-not-allowed');
+      resignButton?.classList.remove('pixel-btn-danger');
+      resignButton?.classList.add('pixel-btn-disabled');
+      resignButton!.textContent = 'Invitación cancelada';
+    }
 
     if (guestRoom) {
       const roomCard = document.querySelector(`[data-room="${guestRoom}"]`);
@@ -336,6 +366,45 @@ export const prerender = true;
           badge.classList.remove('hidden');
         }
       }
+    }
+  });
+  resignButton?.addEventListener('click', async () => {
+    const guestName = sessionStorage.getItem('guestName');
+    if (!guestName) {
+      alert('No se encontró tu nombre. Redirigiendo a la página principal.');
+      window.location.href = '/';
+      return;
+    }
+
+    const confirmResign = confirm('¿Estás seguro de que no podrás asistir? Esto cancelará tu invitación.');
+    if (!confirmResign) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/guests/resign-invitation-with-guestname', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ guestName }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          alert('Tu invitación ha sido cancelada. Lamentamos que no puedas asistir.');
+          sessionStorage.setItem('cancelled', 'true');
+          window.location.href = '/';
+        } else {
+          alert('Hubo un problema al cancelar tu invitación. Por favor, intenta nuevamente o avisa a los papas de santi.');
+        }
+      } else {
+        alert('Error en la solicitud. Por favor, intenta nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error al cancelar la invitación:', error);
+      alert('Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde.');
     }
   });
 </script>

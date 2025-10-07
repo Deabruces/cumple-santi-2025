@@ -24,6 +24,7 @@ export const Step6 = ({ guests, selectedGuest, selectedRoom }: Step6Props) => {
 	useEffect(() => {
 		// Save guest info to sessionStorage
 		sessionStorage.setItem("rsvpCompleted", "true");
+		sessionStorage.removeItem("cancelled");
 		sessionStorage.setItem("guestName", guestName);
 		sessionStorage.setItem("guestRoom", selectedRoom || "");
 

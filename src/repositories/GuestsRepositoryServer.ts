@@ -66,4 +66,12 @@ export const GuestsRepositoryServer = {
 		const guest = result[0];
 		return guest;
 	},
+	async resignInvitationWithGuestName({ guestName }: { guestName: string }) {
+		const result = await client
+			.update(schema)
+			.set({ room_assigned: "no puedo asistir" })
+			.where(eq(schema.name, guestName))
+			.returning();
+		return result[0];
+	}
 };
